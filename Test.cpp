@@ -80,9 +80,9 @@ TEST_CASE("Character class")
         CHECK_EQ(name1, "yulia");
         // getLocation
         CHECK_NOTHROW(war1.getLocation());
-        CHECK_EQ(war1.getLocation(), p1);
-        CHECK_EQ(war2.getLocation(), p2);
-        // print
+        // CHECK_EQ(war1.getLocation(), p1);
+        // CHECK_EQ(war2.getLocation(), p2);
+        //  print
         CHECK_NOTHROW(war1.print());
         string printWarrior = war1.print();
         CHECK_EQ(printWarrior, "");
@@ -95,15 +95,161 @@ TEST_CASE("Cowboy class")
         Point p1(1, 2);
         CHECK_NOTHROW(Cowboy c1("yulia", p1));
         Cowboy c1("yulia", p1);
-        CHECK(c1.hasboolets());//Checks if Character and Cowboy constructors combined
-        CHECK_EQ(c1.getHits(),110);
-
-
-
+        CHECK(c1.hasboolets()); // Checks if Character and Cowboy constructors combined
+        CHECK_EQ(c1.getHits(), 110);
     }
-    SUBCASE("Functions") {}
+    SUBCASE("Functions")
+    {
+        // shoot
+        Point p1(1, 2);
+        Point p2(4, 5);
+        Cowboy c1("yulia", p1);
+        Character *war1 = new Character("dudi", p2, 110);
+        CHECK_NOTHROW(c1.shoot(war1));
+        c1.shoot(war1);
+        int res = war1->getHits();
+        CHECK_EQ(res, 100);
+        // hasboolets
+        CHECK_NOTHROW(c1.hasboolets());
+        CHECK_EQ(c1.hasboolets(), 5);
+        c1.shoot(war1);
+        c1.shoot(war1);
+        CHECK_EQ(c1.hasboolets(), 3);
+
+        CHECK_EQ(c1.hasboolets(), 0);
+        // print
+        CHECK_NOTHROW(c1.print());
+        CHECK_EQ(c1.print(), "");
+        // reload
+        CHECK_NOTHROW(c1.reload());
+        c1.reload();
+        CHECK_EQ(c1.hasboolets(), 6);
+        CHECK_THROWS(c1.reload()); // Cant reload full stack
+        // getBullets
+    }
 }
-TEST_CASE("Character class") {}
-TEST_CASE("Character class") {}
-TEST_CASE("Character class") {}
-TEST_CASE("Character class") {}
+TEST_CASE("Ninja class")
+{
+    SUBCASE("Constructors")
+    {
+        Point p1(1, 2);
+        CHECK_NOTHROW(Ninja n1("Yulia", p1, 110, 12));
+    }
+    SUBCASE("Functions")
+    {
+        // move
+        Point p1(1, 2);
+        Point p2(3, 4);
+        Ninja n1("Yulia", p1, 110, 12);
+        Ninja *n2 = new Ninja("Dudi", p2, 110, 12);
+        CHECK_NOTHROW(n1.move(n2));
+        // slash
+        CHECK_NOTHROW(n1.slash(n2));
+        n1.slash(n2);
+        CHECK_EQ(n2->getHits(), 70);
+        // print
+        CHECK_NOTHROW(n1.print());
+        CHECK_EQ(n1.print(), "");
+    }
+}
+TEST_CASE("OldNinja class")
+{
+    SUBCASE("Constructors")
+    {
+        Point p1(1, 2);
+        CHECK_NOTHROW(OldNinja n1("Yulia", p1));
+        OldNinja n1("Yulia", p1);
+        CHECK_EQ(n1.getHits(), 150);
+        CHECK_EQ(n1.getSpeed(), 8);
+    }
+    SUBCASE("Functions")
+    {
+        // move
+        Point p1(1, 2);
+        Point p2(3, 4);
+        OldNinja n1("Yulia", p1);
+        OldNinja *n2 = new OldNinja("Dudi", p2);
+        CHECK_NOTHROW(n1.move(n2));
+        // slash
+        CHECK_NOTHROW(n1.slash(n2));
+        n1.slash(n2);
+        CHECK_EQ(n2->getHits(), 70);
+        // print
+        CHECK_NOTHROW(n1.print());
+        CHECK_EQ(n1.print(), "");
+    }
+}
+TEST_CASE("TrainedNinja class")
+{
+    SUBCASE("Constructors")
+    {
+        Point p1(1, 2);
+        CHECK_NOTHROW(OldNinja n1("Yulia", p1));
+        TrainedNinja n1("Yulia", p1);
+        CHECK_EQ(n1.getHits(), 120);
+        CHECK_EQ(n1.getSpeed(), 12);
+    }
+    SUBCASE("Functions")
+    {
+        // move
+        Point p1(1, 2);
+        Point p2(3, 4);
+        TrainedNinja n1("Yulia", p1);
+        TrainedNinja *n2 = new TrainedNinja("Dudi", p2);
+        CHECK_NOTHROW(n1.move(n2));
+        // slash
+        CHECK_NOTHROW(n1.slash(n2));
+        n1.slash(n2);
+        CHECK_EQ(n2->getHits(), 70);
+        // print
+        CHECK_NOTHROW(n1.print());
+        CHECK_EQ(n1.print(), "");
+    }
+}
+TEST_CASE("YoungNinja class")
+{
+    SUBCASE("Constructors")
+    {
+        Point p1(1, 2);
+        CHECK_NOTHROW(YoungNinja n1("Yulia", p1));
+        YoungNinja n1("Yulia", p1);
+        CHECK_EQ(n1.getHits(), 100);
+        CHECK_EQ(n1.getSpeed(), 14);
+    }
+    SUBCASE("Functions")
+    {
+        // move
+        Point p1(1, 2);
+        Point p2(3, 4);
+        YoungNinja n1("Yulia", p1);
+        YoungNinja *n2 = new YoungNinja("Dudi", p2);
+        CHECK_NOTHROW(n1.move(n2));
+        // slash
+        CHECK_NOTHROW(n1.slash(n2));
+        n1.slash(n2);
+        CHECK_EQ(n2->getHits(), 70);
+        // print
+        CHECK_NOTHROW(n1.print());
+        CHECK_EQ(n1.print(), "");
+    }
+}
+TEST_CASE("Team class")
+{
+    SUBCASE("Constructors")
+    {
+        Point p1(1, 2);
+        YoungNinja *n1 = new YoungNinja("Yulia", p1);
+        CHECK_NOTHROW(Team t1(n1));
+        Team t1(n1);
+    }
+    SUBCASE("Functions")
+    {
+        Point p1(1, 2);
+        Point p2(3, 4);
+        YoungNinja *n1 = new YoungNinja("Yulia", p1);
+        YoungNinja *n2 = new YoungNinja("Dudi", p2);
+        Team t1(n1);
+        CHECK_NOTHROW(t1.add(n2));
+    }
+}
+

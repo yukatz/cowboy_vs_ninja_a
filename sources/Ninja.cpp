@@ -10,4 +10,7 @@ namespace ariel{
     string Ninja::print(){
         return "";
     }
+    int Ninja::getSpeed(){
+        return speed;
+    }
 }
